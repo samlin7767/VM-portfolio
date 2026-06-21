@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sam Lin — Visual Merchandising Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1815;
+    --bg-deep: #100f0d;
+    --panel: #221f1b;
+    --ink: #e9e3d6;
+    --ink-dim: #a39c8c;
+    --ink-faint: #6e6859;
+    --gold: #b8935a;
+    --gold-soft: rgba(184, 147, 90, 0.35);
+    --line: rgba(184, 147, 90, 0.18);
+    --serif: 'Cormorant', serif;
+    --sans: 'Noto Sans TC', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: radial-gradient(circle at 20% 10%, rgba(184,147,90,0.05), transparent 45%),
+                       radial-gradient(circle at 85% 70%, rgba(184,147,90,0.04), transparent 50%);
+  }
+
+  a { color: inherit; }
+
+  /* ============ HERO ============ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8vh 8vw 6vh;
+    position: relative;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.32em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: riseIn 1s ease forwards 0.2s;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(3rem, 9vw, 7.5rem);
+    line-height: 0.95;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    opacity: 0;
+    animation: riseIn 1.1s ease forwards 0.4s;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    margin-top: 2.2rem;
+    max-width: 36ch;
+    font-size: 1rem;
+    line-height: 1.85;
+    color: var(--ink-dim);
+    font-weight: 300;
+    opacity: 0;
+    animation: riseIn 1s ease forwards 0.65s;
+  }
+
+  .hero-meta {
+    margin-top: 4rem;
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: riseIn 1s ease forwards 0.85s;
+  }
+
+  .hero-meta-item {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.06em;
+  }
+
+  .hero-meta-item strong {
+    display: block;
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-top: 0.3rem;
+    letter-spacing: 0;
+  }
+
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 5vh;
+    left: 8vw;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    text-transform: uppercase;
+  }
+
+  .hero-scroll::after {
+    content: '';
+    width: 1px;
+    height: 28px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollLine 1.8s ease-in-out infinite;
+  }
+
+  @keyframes scrollLine {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  /* ============ TIMELINE NAV ============ */
+  .timeline-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(26, 24, 21, 0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    padding: 1.1rem 8vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .timeline-nav-brand {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  .timeline-nav-brand .dot {
+    color: var(--gold);
+  }
+
+  .timeline-track {
+    display: flex;
+    gap: 0;
+    flex: 1;
+    justify-content: flex-end;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .timeline-track::-webkit-scrollbar { display: none; }
+
+  .timeline-btn {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    color: var(--ink-faint);
+    background: none;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+    transition: color 0.3s;
+  }
+
+  .timeline-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .timeline-btn:hover, .timeline-btn.active {
+    color: var(--ink);
+  }
+  .timeline-btn.active::after { transform: scaleX(1); }
+
+  /* ============ SECTIONS ============ */
+  .era {
+    padding: 7vh 8vw 5vh;
+    position: relative;
+    z-index: 2;
+  }
+
+  .era-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .era-year {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    border: 1px solid var(--gold-soft);
+    padding: 0.35rem 0.9rem;
+    border-radius: 2px;
+  }
+
+  .era-name {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+    font-weight: 300;
+    letter-spacing: 0.01em;
+  }
+
+  .era-tagline {
+    font-size: 0.92rem;
+    color: var(--ink-faint);
+    font-weight: 300;
+    margin: 0.8rem 0 3.5rem;
+    max-width: 60ch;
+    line-height: 1.7;
+    padding-left: 0.1rem;
+  }
+
+  .group-block {
+    margin-bottom: 4.5rem;
+  }
+
+  .group-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .group-label .line {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .group-label-text {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-dim);
+  }
+
+  .group-label-text .brand {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* grid of window frames */
+  .frame-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-auto-rows: 10px;
+    gap: 1.6rem;
+  }
+
+  .frame {
+    position: relative;
+    background: var(--bg-deep);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.4s ease, transform 0.4s ease;
+  }
+
+  .frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid transparent;
+    z-index: 3;
+    pointer-events: none;
+    transition: border-color 0.4s ease, inset 0.4s ease;
+  }
+
+  .frame:hover {
+    border-color: var(--gold-soft);
+    transform: translateY(-3px);
+  }
+
+  .frame:hover::before {
+    border-color: var(--gold);
+    inset: 6px;
+  }
+
+  .frame img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: saturate(0.92) brightness(0.94);
+    transition: filter 0.5s ease, transform 0.6s ease;
+  }
+
+  .frame:hover img {
+    filter: saturate(1.05) brightness(1.02);
+    transform: scale(1.035);
+  }
+
+  .frame-index {
+    position: absolute;
+    top: 0.7rem;
+    left: 0.8rem;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: rgba(233, 227, 214, 0.55);
+    background: rgba(16, 15, 13, 0.55);
+    padding: 0.25rem 0.55rem;
+    backdrop-filter: blur(4px);
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .frame:hover .frame-index { opacity: 1; }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    padding: 8vh 8vw 6vh;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .footer-mark {
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    font-weight: 300;
+  }
+
+  .footer-mark em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .footer-note {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* ============ LIGHTBOX ============ */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(10, 9, 8, 0.96);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 4vh 4vw;
+    backdrop-filter: blur(6px);
+  }
+
+  .lightbox.open {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 86vh;
+    object-fit: contain;
+    border: 1px solid var(--gold-soft);
+  }
+
+  .lightbox-caption {
+    position: absolute;
+    bottom: 4vh;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-dim);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 3vh;
+    right: 4vw;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--ink-dim);
+    background: none;
+    border: 1px solid var(--line);
+    padding: 0.6rem 1.1rem;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    transition: all 0.3s;
+  }
+  .lightbox-close:hover {
+    color: var(--ink);
+    border-color: var(--gold);
+  }
+
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--ink-dim);
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    cursor: pointer;
+    padding: 1rem;
+    transition: color 0.3s;
+  }
+  .lightbox-nav:hover { color: var(--gold); }
+  .lightbox-prev { left: 1vw; }
+  .lightbox-next { right: 1vw; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 720px) {
+    .hero { padding: 6vh 6vw 5vh; }
+    .timeline-nav { padding: 0.9rem 5vw; flex-wrap: wrap; }
+    .era { padding: 5vh 5.5vw 3vh; }
+    .frame-grid { grid-template-columns: 1fr; }
+    .footer { padding: 6vh 6vw 5vh; flex-direction: column; align-items: flex-start; }
+    .footer-note { text-align: left; }
+    .lightbox-nav { font-size: 1.6rem; padding: 0.6rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--gold);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">Visual Merchandising — Portfolio</div>
+    <h1 class="hero-title">Window<br><em>Frames</em></h1>
+    <p class="hero-sub">三段品牌、三種市場語言——從快時尚的節奏感，到法式家居的靜謐質地。每一個櫥窗,都是一次對空間與光線的策展。</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">期間<strong>2014 — 2018</strong></div>
+      <div class="hero-meta-item">品牌<strong>ZARA · ZUGUA · BBL Premium</strong></div>
+      <div class="hero-meta-item">市場<strong>台灣 · 香港</strong></div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- STICKY TIMELINE NAV -->
+  <nav class="timeline-nav">
+    <div class="timeline-nav-brand">Sam Lin<span class="dot"> · </span>VM</div>
+    <div class="timeline-track" id="timelineTrack"></div>
+  </nav>
+
+  <main id="content"></main>
+
+  <footer class="footer">
+    <div class="footer-mark">Photo by <em>Sam</em></div>
+    <div class="footer-note">VISUAL MERCHANDISING PORTFOLIO<br>2014 — 2018 · TAIWAN / HONG KONG</div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lbClose">CLOSE ✕</button>
+    <button class="lightbox-nav lightbox-prev" id="lbPrev">‹</button>
+    <button class="lightbox-nav lightbox-next" id="lbNext">›</button>
+    <img id="lbImg" src="" alt="">
+    <div class="lightbox-caption" id="lbCaption"></div>
+  </div>
+
+<script>
+const manifest = [{"file": "page_01.jpg", "brand": "BBL Premium", "category": "Store & Window Display", "year": "2017-2018"}, {"file": "page_02.jpg", "brand": "BBL Premium", "category": "Store & Window Display", "year": "2017-2018"}, {"file": "page_03.jpg", "brand": "BBL Premium", "category": "Store & Window Display", "year": "2017-2018"}, {"file": "page_04.jpg", "brand": "BBL Premium", "category": "Store & Window Display", "year": "2017-2018"}, {"file": "page_05.jpg", "brand": "BBL Premium", "category": "Store & Window Display", "year": "2017-2018"}, {"file": "page_06.jpg", "brand": "BBL Premium", "category": "Catalog Design", "year": "2017-2018"}, {"file": "page_07.jpg", "brand": "BBL Premium", "category": "Catalog Design", "year": "2017-2018"}, {"file": "page_08.jpg", "brand": "BBL Premium", "category": "Catalog Design", "year": "2017-2018"}, {"file": "page_09.jpg", "brand": "BBL Premium", "category": "Catalog Design", "year": "2017-2018"}, {"file": "page_10.jpg", "brand": "BBL Premium", "category": "Catalog Design", "year": "2017-2018"}, {"file": "page_11.jpg", "brand": "BBL Premium", "category": "Catalog Design", "year": "2017-2018"}, {"file": "page_12.jpg", "brand": "BBL Premium", "category": "Catalog Design", "year": "2017-2018"}, {"file": "page_13.jpg", "brand": "BBL Premium", "category": "Catalog Design", "year": "2017-2018"}, {"file": "page_14.jpg", "brand": "BBL Premium", "category": "Catalog Design", "year": "2017-2018"}, {"file": "page_15.jpg", "brand": "BBL Premium", "category": "Catalog Design", "year": "2017-2018"}, {"file": "page_16.jpg", "brand": "BBL Premium", "category": "Online Shop Design", "year": "2017-2018"}, {"file": "page_17.jpg", "brand": "BBL Premium x 東京西川", "category": "Window Design", "year": "2017-2018"}, {"file": "page_18.jpg", "brand": "BBL Premium x 東京西川", "category": "Window Design", "year": "2017-2018"}, {"file": "page_19.jpg", "brand": "BBL Premium", "category": "品牌活動形象設計", "year": "2017-2018"}, {"file": "page_20.jpg", "brand": "ZUGUA", "category": "門市櫥窗設計", "year": "2015-2017"}, {"file": "page_21.jpg", "brand": "ZUGUA", "category": "門市櫥窗設計", "year": "2015-2017"}, {"file": "page_22.jpg", "brand": "ZUGUA", "category": "線上商店企劃", "year": "2015-2017"}, {"file": "page_23.jpg", "brand": "ZUGUA", "category": "線上商店企劃", "year": "2015-2017"}, {"file": "page_24.jpg", "brand": "ZUGUA", "category": "線上商店企劃", "year": "2015-2017"}, {"file": "page_25.jpg", "brand": "ZUGUA", "category": "線上商店企劃", "year": "2015-2017"}, {"file": "page_26.jpg", "brand": "ZUGUA", "category": "線上商店企劃", "year": "2015-2017"}, {"file": "page_27.jpg", "brand": "ZUGUA", "category": "陳列企劃", "year": "2015-2017"}, {"file": "page_28.jpg", "brand": "ZARA", "category": "台灣 Window Display", "year": "2014-2015"}, {"file": "page_29.jpg", "brand": "ZARA", "category": "台灣 Window Display", "year": "2014-2015"}, {"file": "page_30.jpg", "brand": "ZARA", "category": "台灣 Window Display", "year": "2014-2015"}, {"file": "page_31.jpg", "brand": "ZARA", "category": "台灣 Window Display", "year": "2014-2015"}, {"file": "page_32.jpg", "brand": "ZARA", "category": "台灣 Window Display", "year": "2014-2015"}, {"file": "page_33.jpg", "brand": "ZARA", "category": "香港 Window Display", "year": "2014-2015"}, {"file": "page_34.jpg", "brand": "ZARA", "category": "香港 Window Display", "year": "2014-2015"}, {"file": "page_35.jpg", "brand": "ZARA", "category": "香港 Window Display", "year": "2014-2015"}, {"file": "page_36.jpg", "brand": "ZARA", "category": "香港 Window Display", "year": "2014-2015"}, {"file": "page_37.jpg", "brand": "ZARA", "category": "香港 Window Display", "year": "2014-2015"}, {"file": "page_38.jpg", "brand": "ZARA", "category": "香港 Window Display", "year": "2014-2015"}, {"file": "page_39.jpg", "brand": "ZARA", "category": "香港 Window Display", "year": "2014-2015"}, {"file": "page_40.jpg", "brand": "ZARA", "category": "Accessories", "year": "2014-2015"}, {"file": "page_41.jpg", "brand": "ZARA", "category": "Accessories", "year": "2014-2015"}, {"file": "page_42.jpg", "brand": "ZARA", "category": "Accessories", "year": "2014-2015"}, {"file": "page_43.jpg", "brand": "ZARA", "category": "Accessories", "year": "2014-2015"}];
+
+// Group by era (brand+year combo at top level), then by category within era
+const eraOrder = [
+  { key: "BBL Premium", year: "2017-2018", label: "BBL Premium", tagline: "法式寢具品牌 · 百貨專櫃陳列、型錄拍攝企劃與品牌官網視覺。任職視覺陳列設計師期間,負責全台專櫃的陳列規劃與型錄拍攝美術指導。" },
+  { key: "ZUGUA", year: "2015-2017", label: "ZUGUA", tagline: "台灣設計師服飾品牌 · 門市櫥窗設計與線上商店企劃,聚焦極簡構圖與材質的對話。" },
+  { key: "ZARA", year: "2014-2015", label: "ZARA", tagline: "國際快時尚品牌 · 台灣與香港門市櫥窗陳列,在快速更迭的商業節奏中維持一致的品牌語言。" }
+];
+
+function brandMatches(itemBrand, key) {
+  return itemBrand === key || itemBrand.startsWith(key);
+}
+
+const content = document.getElementById('content');
+const track = document.getElementById('timelineTrack');
+let flatImages = []; // for lightbox nav: {file, brand, category, year, caption}
+
+eraOrder.forEach((era, eraIdx) => {
+  const items = manifest.filter(m => brandMatches(m.brand, era.key));
+  if (items.length === 0) return;
+
+  const eraId = 'era-' + eraIdx;
+  const section = document.createElement('section');
+  section.className = 'era';
+  section.id = eraId;
+
+  let html = `
+    <div class="era-header">
+      <span class="era-year">${era.year}</span>
+      <h2 class="era-name">${era.label}</h2>
+    </div>
+    <p class="era-tagline">${era.tagline}</p>
+  `;
+
+  // group by category, preserving first-seen order
+  const cats = [];
+  const catMap = {};
+  items.forEach(it => {
+    if (!catMap[it.category]) { catMap[it.category] = []; cats.push(it.category); }
+    catMap[it.category].push(it);
+  });
+
+  cats.forEach(cat => {
+    html += `<div class="group-block">
+      <div class="group-label">
+        <span class="group-label-text"><span class="brand">${cat}</span></span>
+        <span class="line"></span>
+      </div>
+      <div class="frame-grid">`;
+    catMap[cat].forEach(it => {
+      const globalIdx = flatImages.length;
+      flatImages.push({ ...it, displayLabel: `${era.label} — ${cat}` });
+      html += `<div class="frame" data-idx="${globalIdx}">
+        <img src="images/${it.file}" alt="${era.label} ${cat}" loading="lazy">
+        <span class="frame-index">${era.year}</span>
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+
+  section.innerHTML = html;
+  content.appendChild(section);
+
+  const btn = document.createElement('button');
+  btn.className = 'timeline-btn';
+  btn.textContent = era.year.split('-')[0] + ' · ' + era.label;
+  btn.addEventListener('click', () => {
+    document.getElementById(eraId).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  track.appendChild(btn);
+});
+
+// active state on scroll
+const sections = Array.from(document.querySelectorAll('.era'));
+const navBtns = Array.from(track.children);
+function updateActive() {
+  let activeIdx = 0;
+  sections.forEach((s, i) => {
+    if (s.getBoundingClientRect().top < window.innerHeight * 0.35) activeIdx = i;
+  });
+  navBtns.forEach((b, i) => b.classList.toggle('active', i === activeIdx));
+}
+window.addEventListener('scroll', updateActive, { passive: true });
+updateActive();
+
+// Masonry: set grid-row-end span based on natural image aspect ratio
+function layoutMasonry() {
+  const rowHeight = 10;
+  const gap = 25.6; // 1.6rem in px (approx, matches CSS gap)
+  document.querySelectorAll('.frame').forEach(frame => {
+    const img = frame.querySelector('img');
+    const setSpan = () => {
+      const colWidth = frame.getBoundingClientRect().width;
+      if (!colWidth || !img.naturalWidth) return;
+      const renderedHeight = colWidth * (img.naturalHeight / img.naturalWidth);
+      const span = Math.ceil((renderedHeight + gap) / (rowHeight + gap));
+      frame.style.gridRowEnd = `span ${span}`;
+    };
+    if (img.complete && img.naturalWidth) setSpan();
+    else img.addEventListener('load', setSpan);
+    window.addEventListener('resize', setSpan);
+  });
+}
+layoutMasonry();
+// recalc after fonts/images settle
+window.addEventListener('load', layoutMasonry);
+
+// Lightbox
+const lightbox = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+const lbCaption = document.getElementById('lbCaption');
+let currentIdx = 0;
+
+function openLightbox(idx) {
+  currentIdx = idx;
+  const item = flatImages[idx];
+  lbImg.src = `images/${item.file}`;
+  lbCaption.textContent = `${item.displayLabel} · ${item.year}`;
+  lightbox.classList.add('open');
+}
+function closeLightbox() { lightbox.classList.remove('open'); }
+function nav(delta) {
+  currentIdx = (currentIdx + delta + flatImages.length) % flatImages.length;
+  openLightbox(currentIdx);
+}
+
+document.addEventListener('click', (e) => {
+  const frame = e.target.closest('.frame');
+  if (frame) openLightbox(parseInt(frame.dataset.idx));
+});
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lbPrev').addEventListener('click', () => nav(-1));
+document.getElementById('lbNext').addEventListener('click', () => nav(1));
+lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', (e) => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') nav(-1);
+  if (e.key === 'ArrowRight') nav(1);
+});
+</script>
+</body>
+</html>
